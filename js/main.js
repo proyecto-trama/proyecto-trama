@@ -9,6 +9,8 @@ function leer(evento){
         };
 
         reader.readAsText(archivo);
+
+        document.getElementById('archivo').value = '';
     }
 }
 
@@ -33,24 +35,40 @@ const calcular = () =>{
     console.log(cadena);
 
     let arreglo = [];
+    let par = '', count = 0;
     for(let i = 0; i < cadena.length; i++) {
-        arreglo[i] = cadena.charAt(i);
+        par += cadena.charAt(i);
+        //console.log(par);
+        if(i%2 != 0) {
+            arreglo[count] = par;
+            count++;
+            par='';
+        }
+        
     }
+    console.log(arreglo);
+
+    let header = arreglo[14];
+    let headerP = arreglo[14].charAt(0);
+    let headerL = arreglo[14].charAt(1);
+
+    console.log(headerP);
+    console.log(headerL);
+
 
     //Calculo MAC Origen - MAC Destino
     let macOrigen = '', macDestino = '';
 
-    for(let i = 0; i < cadena.length; i++) {
-        if(i < 12){
+    for(let i = 0; i < 12; i++) {
+        if(i < 6){
             macDestino += arreglo[i];
-
-            if(i%2 != 0 && i != 11){
+            if(i!=5){
                 macDestino += ':';
             }
-        } else if(i > 11 && i < 24){
+            
+        } else if(i > 5 && i < 12){
             macOrigen += arreglo[i];
-
-            if(i%2 != 0 && i != 23){
+            if(i!=11){
                 macOrigen += ':';
             }
         }
@@ -62,16 +80,16 @@ const calcular = () =>{
 
     let tipoRed = '', version = '';
 
-    for(let i = 24; i < 28; i++) {
-        tipoRed += arreglo[i]; 
-    }
+    tipoRed = arreglo[12] + arreglo[13]; 
+    console.log(tipoRed);
+
 
     if(tipoRed == '0800'){
         version = 'IPv4 (0x0800)';
     } else if (tipoRed == '0806'){
         version = 'ARP (0x0806)';
-    } else if (tipoRed == '08dd'){
-        version = 'IPv6 (0x08dd)';
+    } else if (tipoRed == '86dd'){
+        version = 'IPv6 (0x86dd)';
     } else if (tipoRed == '8100'){
         version = 'VLAN (0x8100)';
     } else if (tipoRed == '0835'){
@@ -82,79 +100,104 @@ const calcular = () =>{
 
     console.log(version);
 
-
     //IP Origen - IP Destino
-    let ipOrigen = '', ipDestino = '', par = '';
 
-    par = arreglo[52] + arreglo[53];
-    ipOrigen += parseInt(par,16);
-    ipOrigen += '.';
-    par='';
+    let ipOrigen = '', ipDestino = '';
 
-    par = arreglo[54] + arreglo[55];
-    ipOrigen += parseInt(par,16);
-    ipOrigen += '.';
-    par='';
+    if(headerP == '4'){
+        //IPv4
 
-    par = arreglo[56] + arreglo[57];
-    ipOrigen += parseInt(par,16);
-    ipOrigen += '.';
-    par='';
+        ipOrigen += parseInt(arreglo[26],16);
+        ipOrigen += '.';
 
-    par = arreglo[58] + arreglo[59];
-    ipOrigen += parseInt(par,16);
-    par='';
+        ipOrigen += parseInt(arreglo[27],16);
+        ipOrigen += '.';
 
-    console.log(ipOrigen);
+        ipOrigen += parseInt(arreglo[28],16);
+        ipOrigen += '.';
 
+        ipOrigen += parseInt(arreglo[29],16);
 
-    par = arreglo[60] + arreglo[61];
-    ipDestino += parseInt(par,16);
-    ipDestino += '.';
-    par='';
+        console.log(ipOrigen);
 
-    par = arreglo[62] + arreglo[63];
-    ipDestino += parseInt(par,16);
-    ipDestino += '.';
-    par='';
+        ipDestino += parseInt(arreglo[30],16);
+        ipDestino += '.';
 
-    par = arreglo[64] + arreglo[65];
-    ipDestino += parseInt(par,16);
-    ipDestino += '.';
-    par='';
+        ipDestino += parseInt(arreglo[31],16);
+        ipDestino += '.';
 
-    par = arreglo[66] + arreglo[67];
-    ipDestino += parseInt(par,16);
-    par='';
+        ipDestino += parseInt(arreglo[32],16);
+        ipDestino += '.';
 
-    console.log(ipDestino);
+        ipDestino += parseInt(arreglo[33],16);
+
+        console.log(ipDestino);
+
+    } else if(headerP == '6'){
+        //IPv6
+
+        for(let i = 22; i < 38; i++) {
+            ipOrigen += arreglo[i];
+
+            if(i%2 != 0 && i != 37){
+                ipOrigen += ':';
+            }
+        }
+
+        console.log(ipOrigen);
+
+        for(let i = 38; i < 54; i++) {
+            ipDestino += arreglo[i];
+
+            if(i%2 != 0 && i != 53){
+                ipDestino += ':';
+            }
+        }
+
+        console.log(ipDestino);
+    }
 
 
     //Puerto Origen - Destino
-    let puertoOrigen = '', puertoDestino = '';
-
-    par = arreglo[68] + arreglo[69]+ arreglo[70] + arreglo[71];
-    puertoOrigen = parseInt(par,16);
     par='';
-    console.log(puertoOrigen);
+    let puertoOrigen = 0, puertoDestino = 0;
 
-    par = arreglo[72] + arreglo[73]+ arreglo[74] + arreglo[75];
-    puertoDestino = parseInt(par,16);
-    par='';
-    console.log(puertoDestino);
+    if(headerP == '4' ) {
+        par = arreglo[34] + arreglo[35];
+        puertoOrigen = parseInt(par,16);
+        par='';
+        console.log(puertoOrigen);
+
+        par = arreglo[36] + arreglo[37];
+        puertoDestino = parseInt(par,16);
+        par='';
+        console.log(puertoDestino);
+    }
+
+    
 
 
     //TTL - Tiempo de Duración
     let ttl = '';
-
-    par = arreglo[44] + arreglo[45]
-    ttl = parseInt(par,16);
-    par = '';
-    console.log(ttl);
+    if(headerP == '4' ) {
+        ttl = parseInt(arreglo[22],16);
+        par = '';
+        console.log(ttl);
+    } else if(headerP == '6' ){
+        ttl = 'No especificado.'
+    }
+    
+    
 
     //Protocolo
     let protH = '', protocolo = '';
-    protH = arreglo[46] + arreglo[47]
+
+    if(headerP == '4' ) {
+        protH = arreglo[23];
+    } else if(headerP == '6' ){
+        protH = arreglo[20];
+    }
+    
 
     if(protH == '04'){
         protocolo = 'IP Encapsulación';
@@ -166,6 +209,8 @@ const calcular = () =>{
         protocolo = 'ICMP';
     } else if (protH == '29'){
         protocolo = 'IPv6';
+    } else if (protH == '3a'){
+        protocolo = 'ICMPv6';
     } else {
         protocolo = 'No se encuentra.';
     }
