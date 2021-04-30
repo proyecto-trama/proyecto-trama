@@ -1,3 +1,22 @@
+
+function leer(evento){
+    let archivo = evento.target.files[0];
+    if(archivo){
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let contenido = e.target.result;
+            document.getElementById('trama').innerText = contenido;
+        };
+
+        reader.readAsText(archivo);
+    }
+}
+
+window.addEventListener("load", () => {
+    document.getElementById('archivo').addEventListener('change', leer);
+});
+
+
 const borrar = () => {
     document.getElementById('trama').value = '';
 }
