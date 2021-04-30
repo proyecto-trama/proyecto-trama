@@ -152,6 +152,25 @@ const calcular = () =>{
     par = '';
     console.log(ttl);
 
+    //Protocolo
+    let protH = '', protocolo = '';
+    protH = arreglo[46] + arreglo[47]
+
+    if(protH == '04'){
+        protocolo = 'IP Encapsulación';
+    } else if (protH == '06'){
+        protocolo = 'TCP';
+    } else if (protH == '11'){
+        protocolo = 'UDP';
+    } else if (protH == '01'){
+        protocolo = 'ICMP';
+    } else if (protH == '29'){
+        protocolo = 'IPv6';
+    } else {
+        protocolo = 'No se encuentra.';
+    }
+    console.log(protocolo);
+
 
 
     //Mostrar Datos
@@ -164,6 +183,7 @@ const calcular = () =>{
     document.getElementById('ipDestino').value = ipDestino;
     document.getElementById('puertoOrigen').value = puertoOrigen;
     document.getElementById('puertoDestino').value = puertoDestino;
+    document.getElementById('protocolo').value = protocolo;
     }
     
 }
