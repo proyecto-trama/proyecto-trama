@@ -85,7 +85,7 @@ button:hover {
 
 .grupo label,
 .grupo input {
-    width: 100%;
+    width: 95%;
     margin: 0;
     display: inline-block;
 }
@@ -98,3 +98,18 @@ input {
     font-size: 16px;
     margin-bottom: 20px;
 }
+
+@media (max-width: 750px) {
+    .contenedor {
+        width: 90%;
+        margin: 15px auto;
+    }
+}
+
+@media (max-width: 1200px) {
+    .grupo {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
