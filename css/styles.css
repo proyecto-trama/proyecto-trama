@@ -9,9 +9,8 @@ body {
 .contenedor {
     width: 60%;
     max-width: 900px;
-    height: 1000px;
+    height: auto;
     margin: auto;
-    margin-bottom: 60px;
     padding: 60px 0;
 }
 
