@@ -12,7 +12,7 @@ function leer(evento){
     }
 }
 
-window.addEventListener("load", () => {
+window.addEventListener('load', () => {
     document.getElementById('archivo').addEventListener('change', leer);
 });
 
