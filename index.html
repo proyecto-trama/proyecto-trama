@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    
+
+    <div class="contenedor">
+        <h1>Calculo -  Trama de Red</h1>
+        <div class="form">
+            <label for="trama">Trama de Red:</label>
+            <textarea name="" id="trama"></textarea>
+            <button onclick="calcular()">Calcular <i class="fas fa-calculator"></i></button>
+            <button class="borrar" onclick="borrar()">Borrar datos <i class="fas fa-eraser"></i></button>
+        </div>
+
+        <h1>Resultado -  Trama de Red</h1>
+        <div class="form">
+            <div class="grupo">
+                <label for="">Mac Origen:</label>
+                <input type="text" id="macOrigen" disabled>
+            </div>
+            <div class="grupo">
+                <label for="">Mac Destino:</label>
+                <input type="text" id="macDestino" disabled>
+            </div>
+            <div class="grupo">
+                <label for="">Tiempo de Vida (TTL):</label>
+                <input type="text" id="ttl" disabled>
+            </div>
+            <div class="grupo">
+                <label for="">EtherType:</label>
+                <input type="text" id="etherType" disabled>
+            </div>
+            <div class="grupo">
+                <label for="">IP Origen:</label>
+                <input type="text" id="ipOrigen" disabled>
+            </div>
+            <div class="grupo">
+                <label for="">IP Destino:</label>
+                <input type="text" id="ipDestino" disabled>
+            </div>
+            <div class="grupo">
+                <label for="">Puerto Origen:</label>
+                <input type="text" id="puertoOrigen" disabled>
+            </div>
+            <div class="grupo">
+                <label for="">Puerto Destino:</label>
+                <input type="text" id="puertoDestino" disabled>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="js/main.js"></script>
+
+    <!-- ICON -->
+    <script src="https://kit.fontawesome.com/5883557ab1.js" crossorigin="anonymous"></script>
+</body>
+</html>
